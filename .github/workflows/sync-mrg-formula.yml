@@ -1,0 +1,50 @@
+name: Sync mrg Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: "Branch to push updated formula"
+        required: false
+        default: "release"
+  repository_dispatch:
+    types: [mrg_released]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      FORMULA_PATH: Formula/mrg.rb
+      SOURCE_REPO: ilotoki0804/mrg
+      PACKAGE_NAME: mrg
+      TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'release' }}
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Update formula from latest release
+        id: update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/update_formula.py
+
+      - name: Commit and push
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FORMULA_PATH"
+          git commit -m "chore(formula): bump mrg to ${{ steps.update.outputs.version }}"
+          git push origin HEAD:${TARGET_BRANCH}
