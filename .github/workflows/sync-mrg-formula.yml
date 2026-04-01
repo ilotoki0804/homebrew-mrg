@@ -6,7 +6,7 @@ on:
       target_branch:
         description: "Branch to push updated formula"
         required: false
-        default: "release"
+        default: "main"
   repository_dispatch:
     types: [mrg_released]
 
@@ -20,8 +20,7 @@ jobs:
       FORMULA_PATH: Formula/mrg.rb
       SOURCE_REPO: ilotoki0804/mrg
       PACKAGE_NAME: mrg
-      # TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'release' }}
-      TARGET_BRANCH: 'main'
+      TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'main' }}
     steps:
       - name: Checkout target branch
         uses: actions/checkout@v4
