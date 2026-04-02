@@ -39,6 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--event-path", default=os.environ.get("GITHUB_EVENT_PATH"))
     parser.add_argument("--github-output", default=os.environ.get("GITHUB_OUTPUT"))
     parser.add_argument("--github-token", default=os.environ.get("GITHUB_TOKEN"))
+    parser.add_argument("--wait", default=os.environ.get("WAIT_BEFORE_STARTING", str(60 * 60 * 5)))
     return parser.parse_args()
 
 
@@ -47,6 +48,9 @@ def main() -> None:
 
     if not args.github_token:
         raise SystemExit("GITHUB_TOKEN is required")
+
+    if wait := float(args.wait):
+        print(f"Waiting for {wait}s before starting (it could waste Actions running time)")
 
     formula_path = pathlib.Path(args.formula_path)
     event_payload: dict[str, object] = {}
