@@ -6,6 +6,7 @@ import json
 import os
 import pathlib
 import re
+import time
 import urllib.request
 
 
@@ -51,6 +52,7 @@ def main() -> None:
 
     if wait := float(args.wait):
         print(f"Waiting for {wait}s before starting (it could waste Actions running time)")
+        time.sleep(wait)
 
     formula_path = pathlib.Path(args.formula_path)
     event_payload: dict[str, object] = {}
