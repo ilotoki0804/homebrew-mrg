@@ -41,7 +41,7 @@ jobs:
         id: update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WAIT_BEFORE_STARTING: ${{ github.event.inputs.target_branch || '120' }}
+          WAIT_BEFORE_STARTING: ${{ github.event.inputs.wait_before_fetch || '120' }}
         run: |
           python scripts/update_formula.py
 
