@@ -40,7 +40,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--event-path", default=os.environ.get("GITHUB_EVENT_PATH"))
     parser.add_argument("--github-output", default=os.environ.get("GITHUB_OUTPUT"))
     parser.add_argument("--github-token", default=os.environ.get("GITHUB_TOKEN"))
-    parser.add_argument("--wait", default=os.environ.get("WAIT_BEFORE_STARTING", str(60 * 60 * 5)))
+    parser.add_argument("--wait", default=os.environ.get("WAIT_BEFORE_STARTING", "0"))
     return parser.parse_args()
 
 

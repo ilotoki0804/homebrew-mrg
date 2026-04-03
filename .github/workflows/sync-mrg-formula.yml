@@ -7,6 +7,10 @@ on:
         description: "Branch to push updated formula"
         required: false
         default: "main"
+      wait_before_fetch:
+        description: "Waiting time before fetching (float, seconds)"
+        required: false
+        default: "120"
   repository_dispatch:
     types: [mrg_released]
 
@@ -37,6 +41,7 @@ jobs:
         id: update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WAIT_BEFORE_STARTING: ${{ github.event.inputs.target_branch || '120' }}
         run: |
           python scripts/update_formula.py
 
