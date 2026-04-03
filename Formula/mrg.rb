@@ -3,8 +3,8 @@ class Mrg < Formula
 
   desc "Clean miscellaneous files produced by macOS"
   homepage "https://github.com/ilotoki0804/mrg"
-  url "https://files.pythonhosted.org/packages/source/m/mrg/mrg-0.1.1.tar.gz"
-  sha256 "3a6600170198745c23edae957c578d523f68ff914c52e3b6d55ce67373f052cc"
+  url "https://files.pythonhosted.org/packages/source/m/mrg/mrg-0.2.0.tar.gz"
+  sha256 "6e4016828cb966df4de183777a69dfdc9234bc0998028f1b048f207ee12d92d8"
   license "Apache-2.0"
 
   depends_on "python@3.13"
